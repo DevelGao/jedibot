@@ -21,7 +21,7 @@ jedibot is an application that aims to do beneficial actions on the Ethereum blo
 
 ```
 infuraProjectId=
-myEthereumAddress=
+wallet=
 password=
 transactionsRequireConfirmation=true
 playSoundOnTransaction=true
