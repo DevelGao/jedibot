@@ -1,6 +1,5 @@
 .idea/
 jedibot.iml
-wallets/
 logs/*
 
 # Maven.gitignore https://github.com/github/gitignore/blob/master/Maven.gitignore

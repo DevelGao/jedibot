@@ -1,6 +1,5 @@
 package devgao.io.compounddai;
 
-import devgao.io.contractneedsprovider.CircuitBreaker;
 import devgao.io.contractneedsprovider.ContractNeedsProvider;
 import devgao.io.contractneedsprovider.Permissions;
 import devgao.io.gasprovider.GasProvider;
@@ -8,6 +7,7 @@ import devgao.io.medianizer.MedianException;
 import devgao.io.medianizer.Medianizer;
 import devgao.io.util.Balances;
 import devgao.io.util.BigNumberUtil;
+import devgao.io.util.ContractUser;
 import devgao.io.util.IContract;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.LoggerFactory;
@@ -16,7 +16,6 @@ import org.web3j.protocol.Web3j;
 import org.web3j.protocol.core.methods.response.TransactionReceipt;
 import org.web3j.utils.Convert;
 
-import java.io.IOException;
 import java.lang.invoke.MethodHandles;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -24,7 +23,7 @@ import java.util.concurrent.TimeUnit;
 
 import static devgao.io.util.BigNumberUtil.multiply;
 
-public class CompoundDai implements IContract {
+public class CompoundDai extends ContractUser implements IContract {
   public static final String ADDRESS = "0x5d3a536E4D6DbD6114cc1Ead35777bAB948E3643";
   public static final BigInteger gasLimit =
       BigInteger.valueOf(200000); // https://compound.finance/developers#gas-costs
@@ -45,17 +44,6 @@ public class CompoundDai implements IContract {
     gasProvider = contractNeedsProvider.getGasProvider();
     permissions = contractNeedsProvider.getPermissions();
     contract = CompoundDaiContract.load(ADDRESS, web3j, credentials, gasProvider);
-    isContractValid();
-  }
-
-  void isContractValid() {
-    try {
-      contract.isValid();
-      logger.trace("COMPOUND DAI CONTRACT IS VALID");
-    } catch (IOException e) {
-      CircuitBreaker.stopRunning();
-      logger.error(EXCEPTION, e);
-    }
   }
 
   public void mint(@NotNull Balances balances, BigDecimal medianEthereumPrice) {
