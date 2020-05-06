@@ -1,8 +1,6 @@
 language: java
 sudo: false
-script:
-  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=DevelGao_jedibot -DskipITs
-  - mvn test
+script: mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=DevelGao_jedibot -DskipITs
 jdk: oraclejdk13
 addons:
   sonarcloud:

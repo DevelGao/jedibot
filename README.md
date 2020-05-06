@@ -6,7 +6,7 @@ jedibot is an application that aims to do beneficial actions on the Ethereum blo
 
 ### Prerequisites
 
-- Java >= 14.0.1
+- Java >= 13
 - Infura Project ID or Ethereum Node
 - Ethereum Wallet
 - Maven
