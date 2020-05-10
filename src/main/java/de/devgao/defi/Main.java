@@ -3,6 +3,7 @@ package devgao.io;
 import devgao.io.compounddai.CompoundDai;
 import devgao.io.contractneedsprovider.*;
 import devgao.io.dai.Dai;
+import devgao.io.flipper.Flipper;
 import devgao.io.gasprovider.GasProvider;
 import devgao.io.medianizer.Medianizer;
 import devgao.io.oasis.Oasis;
@@ -57,6 +58,7 @@ public class Main {
 
     Oasis oasis = new Oasis(contractNeedsProvider, compoundDai, weth);
     Uniswap uniswap = new Uniswap(contractNeedsProvider, javaProperties, compoundDai, weth);
+    Flipper flipper = new Flipper(contractNeedsProvider);
 
     dai.checkApproval(uniswap);
     dai.checkApproval(oasis);
@@ -72,6 +74,7 @@ public class Main {
         uniswap.checkIfSellDaiIsProfitableThenDoIt(balances);
         uniswap.checkIfBuyDaiIsProfitableThenDoIt(balances);
         compoundDai.lendDai(balances);
+        flipper.checkIfThereAreProfitableFlipAuctions(balances);
       }
 
       List<Long> failedTransactions = circuitBreaker.getFailedTransactions();
