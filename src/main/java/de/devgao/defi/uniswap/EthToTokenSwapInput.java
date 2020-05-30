@@ -1,15 +1,15 @@
 package devgao.io.uniswap;
 
-import java.math.BigInteger;
+import devgao.io.numberutil.Wad18;
 
 public class EthToTokenSwapInput {
-  public final BigInteger minTokens;
-  public final BigInteger deadline;
-  public final BigInteger ethSold;
-  public final BigInteger potentialProfit;
+  public final Wad18 minTokens;
+  public final Wad18 deadline;
+  public final Wad18 ethSold;
+  public final Wad18 potentialProfit;
 
   public EthToTokenSwapInput(
-      BigInteger minTokens, BigInteger deadline, BigInteger ethSold, BigInteger potentialProfit) {
+          Wad18 minTokens, Wad18 deadline, Wad18 ethSold, Wad18 potentialProfit) {
     this.minTokens = minTokens;
     this.deadline = deadline;
     this.ethSold = ethSold;
