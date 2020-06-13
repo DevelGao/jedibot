@@ -7,6 +7,7 @@ import devgao.io.contractutil.Account;
 import devgao.io.gasprovider.GasProvider;
 import devgao.io.medianizer.MedianException;
 import devgao.io.medianizer.Medianizer;
+import devgao.io.numberutil.Sth28;
 import devgao.io.numberutil.Wad18;
 import devgao.io.util.Balances;
 import org.jetbrains.annotations.NotNull;
@@ -114,13 +115,15 @@ public class CompoundDai implements AddressMethod {
     }
   }
 
-  private Wad18 getExchangeRate() {
+  Sth28 getExchangeRate() {
     try {
-      return new Wad18(compoundDaiContract.exchangeRateStored().send());
+      Sth28 exchangeRate = new Sth28(compoundDaiContract.exchangeRateStored().send());
+      logger.trace("CURRENT CDAI EXCHANGE RATE {}", exchangeRate);
+      return exchangeRate;
     } catch (Exception e) {
       logger.error(EXCEPTION, e);
     }
-    return new Wad18();
+    return Sth28.ZERO;
   }
 
   public Account getAccount() {
@@ -128,7 +131,9 @@ public class CompoundDai implements AddressMethod {
   }
 
   public Wad18 getBalanceInDai() {
-    return getExchangeRate().multiply(account.getBalance());
+    Wad18 wad18 = account.getBalance().multiply(getExchangeRate());
+    logger.trace("CDAI BALANCE IN DAI {}", wad18);
+    return wad18;
   }
 
   /**
@@ -179,7 +184,7 @@ public class CompoundDai implements AddressMethod {
       }
       logger.trace(
           "SLOW GAS PRICE {}{}",
-          Convert.fromWei(slowGasPrice.toBigDecimal(), Convert.Unit.GWEI),
+          Convert.fromWei(slowGasPrice.toString(), Convert.Unit.GWEI),
           " GWEI");
       logger.trace("TRANSACTION COSTS {}{}", transactionCosts.toString(2), " DAI");
     } else {
@@ -188,14 +193,14 @@ public class CompoundDai implements AddressMethod {
   }
 
   private Wad18 getSupplyRate() {
-    Wad18 supplyRate = new Wad18();
+    Wad18 supplyRate = Wad18.ZERO;
     try {
       Wad18 supplyRatePerBlock = new Wad18(compoundDaiContract.supplyRatePerBlock().send());
       supplyRate = supplyRatePerYearMultiplicand.multiply(supplyRatePerBlock);
     } catch (Exception e) {
       logger.error(EXCEPTION, e);
     }
-    logger.info("SUPPLY RATE {}{}", supplyRate, " %"); // TODO: test this function: Wad18 introduced a bug here
+    logger.info("SUPPLY RATE {}{}", supplyRate, " %");
     return supplyRate;
   }
 

@@ -1,4 +1,4 @@
-# jedibot [![Build Status](https://travis-ci.com/DevelGao/jedibot.svg?branch=master)](https://travis-ci.com/DevelGao/jedibot) [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=DevelGao_jedibot&metric=coverage)](https://sonarcloud.io/dashboard?id=DevelGao_jedibot)
+# jedibot [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![Build Status](https://travis-ci.com/DevelGao/jedibot.svg?branch=master)](https://travis-ci.com/DevelGao/jedibot) [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=DevelGao_jedibot&metric=coverage)](https://sonarcloud.io/dashboard?id=DevelGao_jedibot)
 
 jedibot is an application that aims to do beneficial actions on the Ethereum blockchain for the [DeFi](https://defipulse.com/) ecosystem while earning a profit for the user. These actions include maintaining the DAI peg, providing liquidity and liquidating undercollateralized assets.
 
